@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>내가 독립운동가의 후손이라면?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --red:    #A5271F;
+  --red-dk: #7E120E;
+  --red-lt: #C8402F;
+  --blue:   #1E3E72;
+  --ink:    #2A2016;        /* 밝은 배경 위 진한 본문 텍스트 */
+  --ink2:   #5A4A34;        /* 보조 텍스트 */
+  --bg:     #FBF9F4;        /* 메인 밝은 배경 */
+  --bg2:    #F4EEE0;        /* 살짝 따뜻한 패널·퀴즈 배경 */
+  --paper:  #F2E7CC;        /* 어두운 표면 위 밝은 텍스트(인트로 자막·팁 블록·다시하기) */
+  --sepia:  #8B7040;
+  --sepia-lt:#9A7A3C;
+  --stone:  #4A3D28;
+  --line:   rgba(42,32,22,0.12);
+  --line2:  rgba(42,32,22,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; height:100%; font-family:'Noto Sans KR',sans-serif; background:var(--bg); overflow:hidden; }
+
+.screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.9s ease; overflow:hidden; }
+.screen.active { opacity:1; pointer-events:all; z-index:30; }
+.screen.scrollable { overflow-y:auto; justify-content:flex-start; }
+
+body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.035; }
+
+/* ── INTRO ── */
+#s-intro { background:#1c150d; z-index:20; }
+#introBg {
+  position:absolute; inset:0; width:100%; height:100%;
+  background-image: url('https://i.ifh.cc/TXhOD4.jpg'); /* ← 이미지 경로 변경 */
+  background-size:cover; background-position:center;
+  filter: sepia(0.28) brightness(1.02) contrast(1.04);
+  transition: opacity 0.5s ease;
+}
+#introBg::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(20,14,8,0.4) 100%);
+}
+#eyeOverlay   { position:absolute; inset:0; width:100%; height:100%; z-index:5; pointer-events:none; }
+#outroOverlay { position:absolute; inset:0; width:100%; height:100%; z-index:5; pointer-events:none; }
+
+.skip-btn { position:absolute; top:20px; right:20px; z-index:10; background:transparent; border:1px solid rgba(196,169,106,0.3); color:rgba(237,224,192,0.5); font-size:11px; letter-spacing:0.2em; padding:6px 14px; border-radius:2px; cursor:pointer; transition:all 0.3s; }
+.skip-btn:hover { color:var(--sepia-lt); border-color:var(--sepia-lt); }
+
+.intro-caption { position:absolute; bottom:12%; left:0; right:0; text-align:center; z-index:6; font-family:'Noto Serif KR',serif; color:var(--paper); font-size:clamp(13px,3.5vw,18px); letter-spacing:0.35em; text-shadow:0 0 40px rgba(196,169,106,0.9); opacity:0; transition:opacity 1.2s ease; }
+.intro-caption.show { opacity:1; }
+
+/* ── STORY ── */
+#s-story { background:var(--bg); z-index:19; overflow-y:auto; }
+.story-bg-deco { position:fixed; inset:0; pointer-events:none; z-index:0;
+  background: radial-gradient(ellipse at 15% 85%, rgba(165,39,31,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 15%, rgba(30,62,114,0.05) 0%, transparent 50%),
+              repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(42,32,22,0.022) 60px, rgba(42,32,22,0.022) 61px); }
+
+.story-wrap { position:relative; z-index:1; max-width:580px; width:90%; padding:60px 20px 80px; display:flex; flex-direction:column; align-items:center; gap:0; }
+.s-line { font-family:'Noto Serif KR',serif; color:var(--ink); text-align:center; width:100%; opacity:0; transform:translateY(14px); transition:opacity 0.65s ease, transform 0.65s ease; }
+.s-line.vis { opacity:1; transform:none; }
+.s-lg  { font-size:clamp(16px,4.5vw,22px); font-weight:700; line-height:1.7; margin-bottom:6px; }
+.s-md  { font-size:clamp(13px,3.5vw,16px); line-height:1.8; color:rgba(42,32,22,0.82); margin-bottom:4px; }
+.s-sm  { font-size:clamp(12px,3vw,14px); font-weight:300; line-height:1.8; color:rgba(42,32,22,0.55); margin-bottom:2px; }
+.s-red { color:#B5271C; font-weight:700; }
+.s-sepia { color:#9A6B1E; font-weight:700; }
+.s-gap { height:22px; }
+.s-gapl{ height:44px; }
+.s-divider { width:70px; height:1px; background:linear-gradient(90deg,transparent,var(--sepia),transparent); margin:24px auto; opacity:0; transition:opacity 0.65s; }
+.s-divider.vis { opacity:1; }
+
+.cta-wrap { margin-top:52px; opacity:0; transform:translateY(18px); transition:opacity 0.8s ease, transform 0.8s ease; }
+.cta-wrap.vis { opacity:1; transform:none; }
+.cta-btn { font-family:'Noto Serif KR',serif; font-size:clamp(14px,3.8vw,17px); font-weight:700; letter-spacing:0.15em; color:#fff; background:linear-gradient(135deg,#6B1010,#8B1A1A,#B83232); border:none; cursor:pointer; padding:17px 44px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); position:relative; overflow:hidden; transition:transform 0.3s,box-shadow 0.3s; }
+.cta-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2),transparent 70%); transform:translateX(-100%); transition:transform 0.55s; }
+.cta-btn:hover::after { transform:translateX(100%); }
+.cta-btn:hover { transform:scale(1.04); box-shadow:0 0 36px rgba(139,26,26,0.5); }
+
+/* ── QUIZ ── */
+#s-quiz { background:var(--bg2); z-index:18; justify-content:flex-start; overflow-y:auto;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(42,32,22,0.032) 30px, rgba(42,32,22,0.032) 31px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(42,32,22,0.018) 30px, rgba(42,32,22,0.018) 31px); }
+.quiz-shell { width:100%; max-width:640px; min-height:100vh; display:flex; flex-direction:column; }
+.prog-track { position:sticky; top:0; z-index:5; width:100%; height:5px; background:rgba(58,48,32,0.12); }
+.prog-fill { height:100%; background:linear-gradient(90deg,#5A0A0A,var(--red),#C84040); transition:width 0.55s ease; width:0%; }
+.q-slide { opacity:0; transform:translateX(28px); transition:opacity 0.38s ease, transform 0.38s ease; display:flex; flex-direction:column; flex:1; }
+.q-slide.in  { opacity:1; transform:none; }
+.q-slide.out { opacity:0; transform:translateX(-28px); }
+.q-top-bar { display:flex; align-items:center; gap:10px; padding:18px 22px 0; }
+.q-badge { font-family:'Noto Serif KR',serif; font-size:11px; letter-spacing:0.22em; color:var(--red); border:1px solid rgba(139,26,26,0.5); padding:4px 10px; background:rgba(255,245,225,0.7); }
+.q-of { font-size:11px; color:rgba(58,48,32,0.45); letter-spacing:0.1em; }
+.q-art { width:100%; aspect-ratio:3/2; position:relative; overflow:hidden; background:var(--ink); flex-shrink:0; }
+.q-art canvas { width:100%; height:100%; display:block; }
+.q-art-img { position:absolute; inset:0; background-size:cover; background-position:center top; filter:sepia(0.3) contrast(1.05) brightness(0.95); }
+.q-body { padding:20px 22px 14px; }
+.q-sit { font-size:11px; letter-spacing:0.2em; color:var(--red); font-weight:600; margin-bottom:10px; }
+.q-main { font-family:'Noto Serif KR',serif; font-size:clamp(17px,4.8vw,23px); font-weight:800; color:var(--ink); line-height:1.6; margin-bottom:6px; }
+.q-sub-text { font-size:clamp(12px,3vw,14px); color:rgba(58,48,32,0.65); line-height:1.7; margin-bottom:20px; }
+.q-opts { display:flex; flex-direction:column; gap:11px; padding:0 22px 44px; }
+.opt { background:#FFFFFF; border:1.5px solid rgba(165,39,31,0.22); padding:17px 18px; display:flex; align-items:flex-start; gap:13px; cursor:pointer; text-align:left; position:relative; overflow:hidden; transition:border-color 0.22s,background 0.22s,transform 0.22s; box-shadow:inset 0 0 0 0 transparent, 0 1px 4px rgba(42,32,22,0.08); }
+.opt::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--red); transform:scaleY(0); transform-origin:bottom; transition:transform 0.22s; }
+.opt:hover { border-color:var(--red); background:#FFF9EF; transform:translateX(3px); box-shadow:0 2px 10px rgba(165,39,31,0.12); }
+.opt:hover::before { transform:scaleY(1); }
+.opt.sel { border-color:var(--red); background:rgba(139,26,26,0.12); box-shadow:0 2px 8px rgba(139,26,26,0.18); }
+.opt.sel::before { transform:scaleY(1); }
+.opt-lbl { font-family:'Noto Serif KR',serif; font-size:clamp(13px,3.2vw,15px); font-weight:800; color:var(--red); flex-shrink:0; margin-top:1px; width:22px; height:22px; border:1.5px solid rgba(139,26,26,0.5); display:flex; align-items:center; justify-content:center; border-radius:50%; }
+.opt-txt { font-size:clamp(13px,3.2vw,15px); color:#1A1208; line-height:1.65; font-family:'Noto Serif KR',serif; font-weight:600; }
+
+/* ── OUTRO VID ── */
+#s-outro { background:#000; z-index:17; }
+#blurCanvas { position:absolute; inset:0; width:100%; height:100%; }
+.outro-caption { position:absolute; bottom:12%; left:0; right:0; text-align:center; z-index:6; font-family:'Noto Serif KR',serif; color:var(--paper); font-size:clamp(13px,3.5vw,18px); letter-spacing:0.35em; text-shadow:0 0 40px rgba(196,169,106,0.9); opacity:0; transition:opacity 1s; }
+.outro-caption.show { opacity:1; }
+
+/* ── OUTRO TEXT ── */
+#s-outro-text { background:var(--bg); z-index:16; overflow-y:auto; }
+
+/* ── RESULT ── */
+#s-result { background:var(--bg2); z-index:15; justify-content:flex-start; overflow-y:auto;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(42,32,22,0.025) 30px, rgba(42,32,22,0.025) 31px); }
+.result-shell { width:100%; max-width:640px; min-height:100vh; display:flex; flex-direction:column; }
+.r-hero { width:100%; height:clamp(280px,58vw,420px); position:relative; overflow:hidden; flex-shrink:0; }
+.r-hero canvas { width:100%; height:100%; display:block; }
+.r-hero-img { position:absolute; inset:0; background-size:cover; background-position:center top; filter:sepia(0.3) contrast(1.05) brightness(0.95); }
+.r-hero-img::before { content:''; position:absolute; inset:0; background: linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, transparent 45%); }
+.r-hero-fade { position:absolute; inset:0; background:linear-gradient(to top,var(--bg2) 0%,rgba(244,238,224,0.3) 45%,transparent 70%); }
+.r-emblem { position:absolute; bottom:18px; left:22px; font-size:clamp(26px,6.5vw,38px); }
+.r-body { padding:4px 22px 70px; display:flex; flex-direction:column; gap:18px; }
+.r-overtag { font-size:11px; letter-spacing:0.25em; color:var(--red); font-weight:600; padding-top:6px; }
+.r-name { font-family:'Noto Serif KR',serif; font-size:clamp(19px,5.2vw,27px); font-weight:900; color:var(--ink); line-height:1.3; }
+.r-fighter { display:flex; align-items:center; gap:10px; font-size:clamp(13px,3.5vw,16px); color:var(--red); font-weight:600; margin-top:5px; }
+.r-fighter::before { content:''; display:inline-block; width:28px; height:1px; background:var(--red); }
+.r-line { width:100%; height:1px; background:linear-gradient(90deg,var(--red) 0%,transparent 70%); }
+.r-word { text-align:center; padding:4px 0; }
+.r-word-kor { font-family:'Noto Serif KR',serif; font-size:clamp(32px,9vw,56px); color:var(--red); opacity:0.22; letter-spacing:0.2em; line-height:1; margin-bottom:5px; text-shadow:2px 2px 0 rgba(139,26,26,0.1); }
+.r-word-sub { font-size:clamp(12px,3vw,14px); color:rgba(58,48,32,0.5); letter-spacing:0.15em; }
+.r-quote { border-left:3px solid var(--red); padding:14px 18px; background:rgba(139,26,26,0.07); font-family:'Noto Serif KR',serif; font-size:clamp(13px,3.3vw,15px); font-style:italic; color:var(--stone); line-height:1.75; border-right:1px solid rgba(139,26,26,0.15); position:relative; }
+.r-quote::before { content:'"'; position:absolute; top:-8px; left:12px; font-size:36px; color:rgba(139,26,26,0.2); font-family:'Noto Serif KR',serif; line-height:1; }
+.r-desc { font-size:clamp(13px,3.3vw,15px); color:var(--stone); line-height:1.9; }
+.r-desc b { color:var(--ink); font-weight:700; }
+.sw-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.sw-card { padding:14px 16px; border:1px solid rgba(139,26,26,0.15); }
+.sw-card.str { background:#fff; }
+.sw-card.wkn { background:rgba(26,58,107,0.05); border-color:rgba(26,58,107,0.15); }
+.sw-label { font-size:10px; letter-spacing:0.2em; font-weight:700; margin-bottom:8px; }
+.sw-card.str .sw-label { color:var(--red); }
+.sw-card.wkn .sw-label { color:var(--blue); }
+.sw-item { font-size:clamp(11px,2.8vw,13px); color:var(--stone); line-height:1.6; padding:3px 0; display:flex; align-items:flex-start; gap:6px; }
+.sw-item::before { flex-shrink:0; margin-top:2px; }
+.sw-card.str .sw-item::before { content:'✔'; color:var(--red); font-size:10px; }
+.sw-card.wkn .sw-item::before { content:'△'; color:var(--blue); font-size:10px; }
+.r-mbti { background:rgba(26,58,107,0.08); border:1px solid rgba(26,58,107,0.25); padding:15px 18px; display:flex; align-items:center; gap:14px; }
+.r-mbti-l { font-size:10px; letter-spacing:0.22em; color:var(--blue); font-weight:700; flex-shrink:0; }
+.r-mbti-v { font-family:'Noto Serif KR',serif; font-size:clamp(15px,3.8vw,18px); font-weight:800; color:var(--ink); }
+.r-tip { background:var(--ink); padding:20px 22px; border-top:2px solid rgba(139,26,26,0.4); position:relative; }
+.r-tip::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,var(--red),transparent); }
+.r-tip-label { font-size:10px; letter-spacing:0.25em; color:var(--sepia-lt); font-weight:700; margin-bottom:10px; }
+.r-tip-text { font-size:clamp(12px,3vw,14px); color:rgba(237,224,192,0.85); line-height:1.9; font-family:'Noto Serif KR',serif; }
+.retry-btn { background:var(--ink); color:var(--paper); font-family:'Noto Serif KR',serif; font-size:clamp(13px,3.3vw,15px); font-weight:700; letter-spacing:0.15em; padding:16px 36px; border:none; cursor:pointer; align-self:center; margin-top:8px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); transition:background 0.3s,transform 0.3s; }
+.retry-btn:hover { background:var(--stone); transform:scale(1.04); }
+
+/* ── PETITION LANDING ── */
+#s-landing { background:var(--bg); z-index:14; overflow-y:auto; justify-content:flex-start;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 44px, rgba(42,32,22,0.02) 44px, rgba(42,32,22,0.02) 45px); }
+.land-wrap { width:100%; max-width:600px; margin:0 auto; }
+@keyframes lFadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.petition-hero { min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 28px 72px; position:relative;
+  background: radial-gradient(ellipse at 50% 85%, rgba(139,26,26,0.14) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 10%, rgba(26,58,107,0.1) 0%, transparent 50%); }
+.petition-top { display:flex; flex-direction:column; align-items:center; text-align:center; padding:52px 28px 36px; position:relative;
+  background: radial-gradient(ellipse at 50% 100%, rgba(139,26,26,0.12) 0%, transparent 70%); }
+.petition-badge { font-family:'Noto Serif KR',serif; font-size:12px; font-weight:700; letter-spacing:0.35em; color:var(--red); border:1px solid rgba(165,39,31,0.32); padding:6px 18px; border-radius:2px; margin-bottom:28px; opacity:0; animation:lFadeUp 0.7s 0.1s ease forwards; }
+.petition-pre { font-size:clamp(11px,2.8vw,13px); letter-spacing:0.2em; color:rgba(42,32,22,0.45); margin-bottom:14px; opacity:0; animation:lFadeUp 0.7s 0.25s ease forwards; }
+.petition-title { font-family:'Noto Serif KR',serif; font-size:clamp(22px,6.5vw,38px); font-weight:900; color:var(--ink); line-height:1.4; margin-bottom:14px; opacity:0; animation:lFadeUp 0.7s 0.35s ease forwards; }
+.petition-title em { font-style:normal; color:#B5271C; }
+.petition-divider { width:50px; height:2px; background:linear-gradient(90deg,var(--red),transparent); margin:0 auto 20px; opacity:0; animation:lFadeUp 0.7s 0.45s ease forwards; }
+.petition-sub { font-size:clamp(13px,3.2vw,15px); color:rgba(42,32,22,0.6); line-height:1.85; margin-bottom:40px; opacity:0; animation:lFadeUp 0.7s 0.5s ease forwards; }
+.petition-cta { font-family:'Noto Serif KR',serif; font-size:clamp(14px,3.8vw,17px); font-weight:700; letter-spacing:0.12em; color:#fff; background:linear-gradient(135deg,#6B1010,#8B1A1A,#B83232); border:none; cursor:pointer; padding:18px 44px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); position:relative; overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; opacity:0; animation:lFadeUp 0.7s 0.6s ease forwards; }
+.petition-cta::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2),transparent 70%); transform:translateX(-100%); transition:transform 0.55s; }
+.petition-cta:hover::after { transform:translateX(100%); }
+.petition-cta:hover { transform:scale(1.04); box-shadow:0 0 36px rgba(139,26,26,0.5); }
+.petition-note { margin-top:14px; font-size:11px; letter-spacing:0.1em; color:rgba(42,32,22,0.4); opacity:0; animation:lFadeUp 0.7s 0.7s ease forwards; }
+/* 카드뉴스 */
+.card-section { padding:20px 0 0; border-top:1px solid var(--line); }
+.card-section-header { padding:40px 28px 20px; }
+.card-section-tag { font-size:10px; letter-spacing:0.25em; font-weight:700; color:var(--red); margin-bottom:12px; }
+.card-section-title { font-family:'Noto Serif KR',serif; font-size:clamp(19px,5vw,26px); font-weight:700; color:var(--ink); line-height:1.45; }
+.card-track { display:flex; flex-direction:column; gap:0; }
+.card-item { width:100%; display:flex; flex-direction:column; border-bottom:1px solid var(--line); }
+.card-img { width:100%; aspect-ratio:3/4; background-color:#1a1208; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; position:relative; }
+.card-img-ph { font-family:'Noto Serif KR',serif; font-size:11px; letter-spacing:0.18em; color:rgba(196,169,106,0.35); text-align:center; line-height:1.8; pointer-events:none; border:1px dashed rgba(196,169,106,0.15); padding:16px 20px; }
+.card-img.has-img .card-img-ph { display:none; }
+.card-num { background:rgba(255,255,255,0.04); padding:10px 16px; font-size:11px; color:rgba(196,169,106,0.4); letter-spacing:0.12em; }
+/* 랜딩 하단 CTA */
+.petition-final { padding:52px 28px 80px; text-align:center; border-top:1px solid var(--line);
+  background:radial-gradient(ellipse at 50% 100%,rgba(165,39,31,0.07) 0%,transparent 65%); }
+.petition-final-title { font-family:'Noto Serif KR',serif; font-size:clamp(18px,5vw,24px); font-weight:700; color:var(--ink); line-height:1.5; margin-bottom:8px; }
+.petition-final-sub { font-size:13px; color:rgba(42,32,22,0.5); margin-bottom:32px; line-height:1.7; }
+
+/* ── DB FORM (새 디자인) ── */
+#s-dbform { background:var(--bg); z-index:13; overflow-y:auto; justify-content:flex-start;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 44px, rgba(42,32,22,0.02) 44px, rgba(42,32,22,0.02) 45px); }
+.nf-wrap { width:100%; max-width:560px; margin:0 auto; }
+.nf-inner { min-height:100svh; display:flex; flex-direction:column; padding:52px 0 80px; }
+.nf-logo { font-family:'Noto Serif KR',serif; font-size:12px; font-weight:700; letter-spacing:0.35em; color:var(--red); border:1px solid rgba(165,39,31,0.32); padding:6px 16px; border-radius:2px; align-self:flex-start; margin:0 24px 32px; }
+.nf-title { font-family:'Noto Serif KR',serif; font-size:clamp(18px,5vw,24px); font-weight:700; color:var(--ink); line-height:1.45; margin:0 24px 6px; }
+.nf-sub { font-size:13px; color:rgba(42,32,22,0.5); line-height:1.7; margin:0 24px 24px; }
+.nf-field { border-bottom:1px solid var(--line); }
+.nf-flabel { display:block; font-family:'Noto Sans KR',sans-serif; font-size:clamp(14px,3.5vw,16px); font-weight:700; color:var(--ink); padding:22px 24px 6px; letter-spacing:0.03em; }
+.nf-flabel .req { color:#B5271C; margin-left:3px; }
+.nf-finput { width:100%; padding:8px 24px 20px; background:transparent; border:none; color:var(--ink); font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; }
+.nf-finput::placeholder { color:rgba(42,32,22,0.3); }
+.nf-tel-row { display:flex; align-items:center; padding:8px 24px 20px; gap:10px; }
+.nf-tel-row svg { flex-shrink:0; opacity:0.55; }
+.nf-tel-row input { flex:1; background:transparent; border:none; color:var(--ink); font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; }
+.nf-tel-row input::placeholder { color:rgba(42,32,22,0.3); }
+.nf-radio-group { padding:10px 24px 22px; display:flex; flex-wrap:wrap; gap:10px; }
+.nf-rbtn { display:flex; align-items:center; gap:10px; padding:13px 18px; border:1.5px solid rgba(165,39,31,0.18); cursor:pointer; transition:border-color 0.18s,background 0.18s; background:#FFFFFF; flex-basis:calc(50% - 5px); }
+.nf-rbtn.full { flex-basis:100%; }
+.nf-rbtn input[type=radio] { display:none; }
+.nf-circle { width:18px; height:18px; border-radius:50%; border:2px solid rgba(42,32,22,0.28); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:border-color 0.15s; }
+.nf-circle::after { content:''; width:8px; height:8px; border-radius:50%; background:#B5271C; opacity:0; transition:opacity 0.12s; }
+.nf-rbtn.sel { border-color:rgba(165,39,31,0.5); background:rgba(165,39,31,0.07); }
+.nf-rbtn.sel .nf-circle { border-color:#B5271C; }
+.nf-rbtn.sel .nf-circle::after { opacity:1; }
+.nf-rtext { font-size:clamp(13px,3.2vw,15px); color:rgba(42,32,22,0.8); }
+.nf-consent { margin:20px 24px; border:1px solid var(--line); padding:18px; background:#FFFFFF; }
+.nf-consent-head { font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+.nf-consent-dot { width:8px; height:8px; border-radius:50%; background:#B5271C; flex-shrink:0; }
+.nf-consent-body { font-size:11px; color:rgba(42,32,22,0.5); line-height:1.7; max-height:84px; overflow-y:auto; }
+.nf-consent-check { display:flex; align-items:center; gap:10px; margin-top:13px; cursor:pointer; }
+.nf-consent-check input { accent-color:#B5271C; width:16px; height:16px; }
+.nf-consent-check span { font-size:12px; color:rgba(42,32,22,0.65); }
+.nf-submit { margin:6px 24px 0; font-family:'Noto Serif KR',serif; font-size:clamp(14px,3.8vw,17px); font-weight:700; letter-spacing:0.12em; color:#fff; background:linear-gradient(135deg,#6B1010,#8B1A1A,#B83232); border:none; cursor:pointer; padding:19px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); position:relative; overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; width:calc(100% - 48px); }
+.nf-submit::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2),transparent 70%); transform:translateX(-100%); transition:transform 0.55s; }
+.nf-submit:hover::after { transform:translateX(100%); }
+.nf-submit:hover { transform:scale(1.02); box-shadow:0 0 36px rgba(139,26,26,0.4); }
+.nf-submit:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+</style>
+</head>
+<body>
+
+<!-- S1 INTRO -->
+<div class="screen active" id="s-intro">
+  <div id="introBg"></div>
+  <canvas id="eyeOverlay"></canvas>
+  <div class="intro-caption" id="introCaption">눈을 뜹니다…</div>
+  <button class="skip-btn" id="skipBtn">건너뛰기</button>
+</div>
+
+<!-- S2 STORY -->
+<div class="screen" id="s-story">
+  <div class="story-bg-deco"></div>
+  <div class="story-wrap" id="storyWrap"></div>
+</div>
+
+<!-- S3 QUIZ -->
+<div class="screen scrollable" id="s-quiz">
+  <div class="quiz-shell">
+    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+    <div class="q-slide in" id="qSlide"></div>
+  </div>
+</div>
+
+<!-- S4 OUTRO VID -->
+<div class="screen" id="s-outro">
+  <canvas id="blurCanvas"></canvas>
+  <canvas id="outroOverlay"></canvas>
+  <div class="outro-caption" id="outroCaption">기억이 흐려집니다…</div>
+</div>
+
+<!-- S5 OUTRO TEXT -->
+<div class="screen" id="s-outro-text">
+  <div class="story-bg-deco"></div>
+  <div class="story-wrap" id="outroWrap"></div>
+</div>
+
+<!-- S-LANDING (서명운동 랜딩) -->
+<div class="screen scrollable" id="s-landing">
+  <div class="land-wrap">
+
+    <!-- 상단 타이틀 (compact) -->
+    <div class="petition-top">
+      <div class="petition-badge">S E E S A W</div>
+      <div class="petition-pre">당신의 독립운동가 유형이 정해졌습니다</div>
+      <h1 class="petition-title">
+        역사를 기억하는 것이<br>
+        <em>독립을 완성하는 일입니다</em>
+      </h1>
+      <div class="petition-divider"></div>
+      <p class="petition-sub">아래 카드뉴스를 확인하고 서명운동에 참여해주세요.</p>
+    </div>
+
+    <!-- 카드뉴스 (메인) -->
+    <div class="card-section">
+      <div class="card-section-header">
+        <div class="card-section-tag">카드뉴스</div>
+        <div class="card-section-title">서명운동,<br>왜 지금 필요할까요?</div>
+      </div>
+      <div class="card-track" id="cardTrack">
+        <div class="card-item">
+          <div class="card-img has-img" id="cimg1" style="background-image:url('https://i.ifh.cc/nfsv1O.jpg')">
+            <div class="card-img-ph" id="cph1">카드뉴스 이미지 1</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="card-img has-img" id="cimg2" style="background-image:url('https://i.ifh.cc/x9vhPh.jpg')">
+            <div class="card-img-ph" id="cph2">카드뉴스 이미지 2</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="card-img has-img" id="cimg3" style="background-image:url('https://i.ifh.cc/TxS4QV.jpg')">
+            <div class="card-img-ph" id="cph3">카드뉴스 이미지 3</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="card-img has-img" id="cimg4" style="background-image:url('https://i.ifh.cc/A6g3Ts.jpg')">
+            <div class="card-img-ph" id="cph4">카드뉴스 이미지 4</div>
+          </div>
+        </div>
+        <div class="card-item">
+          <div class="card-img has-img" id="cimg5" style="background-image:url('https://i.ifh.cc/qbrh8d.jpg')">
+            <div class="card-img-ph" id="cph5">카드뉴스 이미지 5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="petition-final">
+      <div class="petition-final-title">함께 기억할 때,<br>역사는 살아납니다</div>
+      <p class="petition-final-sub">지금 서명으로 그 기억에 당신의 이름을 남겨주세요.</p>
+      <button class="petition-cta" onclick="showScreen('s-dbform')">✍️ &nbsp;서명운동 참여하고 결과보러가기</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- S-DBFORM (서명 정보 입력) -->
+<div class="screen scrollable" id="s-dbform">
+  <div class="nf-wrap">
+    <div class="nf-inner">
+      <div class="nf-logo">S E E S A W</div>
+      <h2 class="nf-title">서명에 참여해주셔서<br><span style="color:var(--sepia-lt)">감사합니다.</span></h2>
+      <p class="nf-sub">정보를 입력하시면 서명이 완료됩니다.</p>
+
+      <div class="nf-field">
+        <label class="nf-flabel">성함을 말씀해 주세요.<span class="req">*</span></label>
+        <input class="nf-finput" type="text" id="nf-name" placeholder="ex) 김영웅" maxlength="20"/>
+      </div>
+
+      <div class="nf-field">
+        <label class="nf-flabel">나이를 말씀해 주세요.<span class="req">*</span></label>
+        <input class="nf-finput" type="number" id="nf-age" placeholder="ex) 24" min="10" max="99"/>
+      </div>
+
+      <div class="nf-field">
+        <label class="nf-flabel">연락처를 말씀해 주세요.<span class="req">*</span></label>
+        <div class="nf-tel-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(42,32,22,0.55)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6.07 6.07l.99-.99a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <input type="tel" id="nf-phone" placeholder="ex) 01012345678" maxlength="11"/>
+        </div>
+      </div>
+
+      <div class="nf-field">
+        <label class="nf-flabel">현재 거주 중인 지역을 선택해 주세요.<span class="req">*</span></label>
+        <div class="nf-radio-group" id="nf-region-group">
+          <label class="nf-rbtn full" onclick="nfRadio('region','서울권',this)">
+            <input type="radio" name="nf-region" value="서울권"/>
+            <div class="nf-circle"></div><span class="nf-rtext">서울권</span>
+          </label>
+          <label class="nf-rbtn full" onclick="nfRadio('region','경기권',this)">
+            <input type="radio" name="nf-region" value="경기권"/>
+            <div class="nf-circle"></div><span class="nf-rtext">경기권</span>
+          </label>
+          <label class="nf-rbtn full" onclick="nfRadio('region','그 외 지역',this)">
+            <input type="radio" name="nf-region" value="그 외 지역"/>
+            <div class="nf-circle"></div><span class="nf-rtext">그 외 지역</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="nf-field">
+        <label class="nf-flabel">현재 거주 중인 (시/군/구)를 말씀해 주세요.<br><span style="font-size:12px;font-weight:400;color:rgba(42,32,22,0.5)">(서울·경기권 주민 확인용)</span><span class="req">*</span></label>
+        <input class="nf-finput" type="text" id="nf-city" placeholder="ex) 강남구, 수원시" maxlength="20"/>
+      </div>
+
+      <div class="nf-field">
+        <label class="nf-flabel">현재 직업 상태를 선택해 주세요.<span class="req">*</span></label>
+        <div class="nf-radio-group" id="nf-job-group">
+          <label class="nf-rbtn" onclick="nfRadio('job','수험생',this)">
+            <input type="radio" name="nf-job" value="수험생"/>
+            <div class="nf-circle"></div><span class="nf-rtext">수험생</span>
+          </label>
+          <label class="nf-rbtn" onclick="nfRadio('job','대학생',this)">
+            <input type="radio" name="nf-job" value="대학생"/>
+            <div class="nf-circle"></div><span class="nf-rtext">대학생</span>
+          </label>
+          <label class="nf-rbtn" onclick="nfRadio('job','취업 준비생',this)">
+            <input type="radio" name="nf-job" value="취업 준비생"/>
+            <div class="nf-circle"></div><span class="nf-rtext">취업 준비생</span>
+          </label>
+          <label class="nf-rbtn" onclick="nfRadio('job','직장인',this)">
+            <input type="radio" name="nf-job" value="직장인"/>
+            <div class="nf-circle"></div><span class="nf-rtext">직장인</span>
+          </label>
+          <label class="nf-rbtn full" onclick="nfRadio('job','무직',this)">
+            <input type="radio" name="nf-job" value="무직"/>
+            <div class="nf-circle"></div><span class="nf-rtext">무직</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="nf-consent">
+        <div class="nf-consent-head"><div class="nf-consent-dot"></div>개인정보 수집 및 이용 동의</div>
+        <div class="nf-consent-body">다음 사항은 SEESAW(이하 'NGO단체')의 회원 및 서비스 이용자(이하 '이용자')의 개인정보 보호를 위해 정보수집의 목적과 이용 및 정책적 보안을 규정한 것으로, 수집 항목: 성함, 나이, 연락처, 거주 지역, 직업 상태 / 이용 목적: 서명운동 참여 확인 및 서비스 제공 / 보유 기간: 서비스 종료 시까지. 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 미동의 시 서명 참여가 제한됩니다.</div>
+        <label class="nf-consent-check">
+          <input type="checkbox" id="nf-agree"/>
+          <span>[필수] 위 개인정보 수집·이용에 동의합니다.</span>
+        </label>
+      </div>
+
+      <button class="nf-submit" id="nfSubmitBtn" onclick="handleDbSubmit()">✍️ &nbsp;서명 완료하고 결과 확인하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- S6 RESULT -->
+<div class="screen scrollable" id="s-result">
+  <div class="result-shell" id="resultShell"></div>
+</div>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+
+const STORY = [
+  {t:'s-sm', tx:'1919년 3월, 차가운 새벽'},
+  {t:'s-lg', tx:'낯선 기억이 떠오릅니다.'},
+  {t:'gap'},
+  {t:'s-lg s-red', tx:'"대한 독립 만세!"'},
+  {t:'s-md', tx:'골목마다 태극기가 펄럭입니다.'},
+  {t:'gapl'},
+  {t:'div'},
+  {t:'gap'},
+  {t:'s-sm', tx:'그 시대를 살았다면'},
+  {t:'s-lg s-sepia', tx:'당신은 어떤 선택을 했을까요?'},
+  {t:'gap'},
+  {t:'s-md', tx:'누구는 총을, 누구는 펜을 들었습니다.'},
+  {t:'s-lg', tx:'당신의 선택이 역사를 만든다면?'},
+  {t:'cta', tx:'🔥 나는 어떤 후손일까?', fn:'startQuiz'},
+];
+
+const OUTRO = [
+  {t:'s-lg', tx:'기억이 서서히 흐려집니다.'},
+  {t:'gap'},
+  {t:'s-sm', tx:'태극기 소리가 멀어지고'},
+  {t:'s-sm', tx:'만세 함성도 점점 희미해집니다.'},
+  {t:'gap'},
+  {t:'s-lg s-red', tx:'"우리는 반드시 독립한다."'},
+  {t:'gapl'},
+  {t:'s-lg', tx:'그리고 다시 현실로 돌아옵니다.'},
+  {t:'gap'},
+  {t:'s-sm', tx:'하지만 방금 당신이 했던 선택들은'},
+  {t:'s-md', tx:'사라지지 않았습니다.'},
+  {t:'gap'},
+  {t:'s-sm', tx:'그 시대의 당신이 보여준 태도는'},
+  {t:'s-lg s-sepia', tx:'지금 당신이 세상을 대하는 방식입니다.'},
+  {t:'cta', tx:'🔥 내 유형 결과 확인하기', fn:'showLanding'},
+];
+
+const QS = [
+  {
+    sit:'1919년 3월 1일 전날 밤',
+    q:'몰래 전달된 쪽지 하나.\n"내일 탑골공원으로 나오라."',
+    sub:'당신은 어떻게 하겠습니까?',
+    a:['일단 내용을 파악하고\n상황을 살핀 뒤 결정한다','주저하지 않고\n내일 새벽 길을 나선다'],
+    icon:'📜', c1:'#0A0E08', c2:'#141A10',
+    img: 'https://i.ifh.cc/FVPGN4.jpg' /* ← Q1 이미지 경로 예: 'images/q1.jpg' */
+  },
+  {
+    sit:'탑골공원, 만세 함성 속에서',
+    q:'일제 경찰이 다가오고 있습니다.\n동료들이 당신을 바라봅니다.',
+    sub:'당신의 선택은?',
+    a:['뒷골목으로 피해\n동료들을 안전하게 이끈다','자리를 지키며\n더 크게 외친다'],
+    icon:'🚩', c1:'#0E0808', c2:'#1A0E0E',
+    img: 'https://i.ifh.cc/TQrSRp.jpg' /* ← Q2 이미지 경로 */
+  },
+  {
+    sit:'동료가 체포되었습니다',
+    q:'함께 운동하던 동료가 잡혔습니다.\n조직이 위험에 처했습니다.',
+    sub:'당신은 어떻게 하겠습니까?',
+    a:['침착하게 상황을 파악하고\n탈출 경로를 모색한다','동료를 구하기 위해\n직접 움직인다'],
+    icon:'⛓️', c1:'#0A0A14', c2:'#101020',
+    img: 'https://i.ifh.cc/pkzY6H.jpg' /* ← Q3 이미지 경로 */
+  },
+  {
+    sit:'비밀 연락책이 되었습니다',
+    q:'독립운동 자금과 문서를 전달해야 합니다.\n검문이 곳곳에 있습니다.',
+    sub:'당신의 방법은?',
+    a:['충분히 경로를 분석하고\n가장 안전한 길을 찾는다','기민하게 움직이며\n빠르게 임무를 완수한다'],
+    icon:'🗺️', c1:'#0E0E08', c2:'#1A1A10',
+    img: 'https://i.ifh.cc/TCKdYM.jpg' /* ← Q4 이미지 경로 */
+  },
+  {
+    sit:'지하 모임에서',
+    q:'독립운동 방향을 두고\n의견이 갈립니다.',
+    sub:'무장 투쟁 vs 외교·교육 운동. 당신의 생각은?',
+    a:['교육과 외교로\n민심과 국제 여론을 얻는다','직접적인 행동으로\n일제에 타격을 가한다'],
+    icon:'✊', c1:'#100A0A', c2:'#1E1010',
+    img: 'https://i.ifh.cc/AlfoHf.jpg' /* ← Q5 이미지 경로 */
+  },
+  {
+    sit:'가족이 위험에 처했습니다',
+    q:'일제가 당신의 가족을 감시하기 시작했습니다.\n운동을 계속하면 가족이 위험합니다.',
+    sub:'당신은?',
+    a:['가족을 먼저 안전하게 피신시키고\n다시 방법을 찾는다','운동을 멈출 수 없다.\n가족에게 양해를 구하고 나아간다'],
+    icon:'🏠', c1:'#0A0C0E', c2:'#10141A',
+    img: 'https://i.ifh.cc/58c0fN.jpg' /* ← Q6 이미지 경로 */
+  },
+  {
+    sit:'임시정부를 알게 되었습니다',
+    q:'상해 임시정부에서 연락이 왔습니다.\n조선을 떠나야 할 수도 있습니다.',
+    sub:'당신의 결정은?',
+    a:['조선 내부에서 할 수 있는 일을\n먼저 찾아본다','망설임 없이\n국경을 넘는다'],
+    icon:'🌏', c1:'#080E14', c2:'#0E1820',
+    img: 'https://i.ifh.cc/GGd6Bp.jpg' /* ← Q7 이미지 경로 */
+  },
+  {
+    sit:'독립 이후를 상상합니다',
+    q:'해방된 조선은 어떤 나라여야 할까요?\n당신이 꿈꾸는 모습은?',
+    sub:'이 싸움에서 당신이 진짜 원하는 것은?',
+    a:['모든 백성이 배움을 누리고\n스스로 일어서는 나라','강인한 힘을 갖춰\n다시는 침략받지 않는 나라'],
+    icon:'🌅', c1:'#0A0808', c2:'#160E08',
+    img: 'https://i.ifh.cc/xqxDGj.jpg' /* ← Q8 이미지 경로 */
+  },
+];
+
+const RESULTS = [
+  {
+    id:'kimgu', name:'조직을 이끄는 전략적 지도자형', fighter:'김구 (金九)',
+    img: 'https://i.ifh.cc/mlTB3T.jpg', /* ← 이미지 경로 설정 예: 'images/kimgu.jpg' */
+    emblem:'🏛️', mbti:'INTJ / ENTJ',
+    quote:'"나의 소원은 첫째도 둘째도 셋째도 통일이오."',
+    word:'大韓', wordSub:'대한의 독립과 통일을 향한 굳건한 의지',
+    desc:[
+      '당신은 <b>큰 그림을 보며 사람과 조직을 이끄는 리더</b>입니다. 감정에 흔들리기보다 상황을 냉철하게 분석하고, 장기적인 목표를 향해 체계적으로 움직입니다.',
+      '복잡한 상황에서도 방향을 잃지 않고 동료들을 한 방향으로 모으는 힘이 있습니다. 신뢰를 바탕으로 한 리더십으로 주변 사람들이 자연스럽게 따르게 만듭니다.',
+      '김구 선생처럼, 당신은 <b>어떤 역경 속에서도 목표를 놓지 않는 불굴의 지도자형</b>입니다. 지금 이 시대에서도 당신의 방향 감각은 빛을 발합니다.',
+    ],
+    strengths:['큰 그림을 보는 전략적 사고','조직을 통솔하는 리더십','흔들리지 않는 신념과 방향성','신뢰를 구축하는 능력'],
+    weakness:['완벽주의로 인해 결정이 늦어질 수 있음','혼자 짊어지려는 경향이 있음'],
+    tip:'당신의 방향 감각과 의지는 매우 강력한 자산입니다. 주변 사람들에게 더 많이 위임하고 함께 나눌 때, 그 힘이 배가됩니다.',
+    pal:{ bg1:'#0A0E08', bg2:'#141A0E', acc:'#7AB648', frame:'#4A8C20' },
+  },
+  {
+    id:'yoo', name:'민중을 깨우는 불꽃 같은 실천가형', fighter:'유관순 (柳寬順)',
+    img: 'https://i.ifh.cc/WDmq0L.jpg', /* ← 이미지 경로 설정 예: 'images/yoo.jpg' */
+    emblem:'🔥', mbti:'ENFP / ENFJ',
+    quote:'"내 손톱이 빠져나가도, 내 몸이 부서져도, 나는 조국의 독립을 위해 싸울 것이오."',
+    word:'萬歲', wordSub:'두려움 없이 진실을 외치는 용기',
+    desc:[
+      '당신은 <b>옳은 것을 보면 망설임 없이 몸으로 뛰어드는 실천형 인간</b>입니다. 이론보다 행동, 계획보다 현장을 믿습니다.',
+      '사람들의 마음을 움직이는 열정과 에너지가 있습니다. 당신 곁에 있으면 누구든 용기가 생깁니다. 그 열기가 주변으로 번지는 것이 당신의 가장 큰 힘입니다.',
+      '유관순 열사처럼, 당신은 <b>두려움보다 신념이 더 크고, 침묵보다 외침을 선택하는 사람</b>입니다. 그 불꽃은 쉽게 꺼지지 않습니다.',
+    ],
+    strengths:['사람을 움직이는 열정과 공감력','두려움을 이기는 실천적 용기','현장에서 발휘되는 순발력','강한 소속감과 연대 의식'],
+    weakness:['감정이 앞서 충동적인 결정을 내릴 수 있음','장기적 지속성을 유지하기 어려울 때가 있음'],
+    tip:'당신의 열정은 세상을 바꾸는 힘입니다. 그 불꽃을 오래 유지하려면 충분한 휴식과 함께, 전략적인 동료가 곁에 있어야 합니다.',
+    pal:{ bg1:'#140808', bg2:'#200E0E', acc:'#C84040', frame:'#8B1A1A' },
+  },
+  {
+    id:'ahn', name:'결정적 순간을 위해 준비하는 결단형', fighter:'안중근 (安重根)',
+    img: 'https://i.ifh.cc/6H90z1.jpg', /* ← 이미지 경로 설정 예: 'images/ahn.jpg' */
+    emblem:'✊', mbti:'ISTJ / INTJ',
+    quote:'"하루라도 책을 읽지 않으면 입 안에 가시가 돋는다."',
+    word:'義거', wordSub:'신중한 준비 끝에 내리는 결단',
+    desc:[
+      '당신은 <b>철저하게 준비하고 결정적인 순간에 흔들림 없이 행동하는 사람</b>입니다. 감정보다 원칙, 충동보다 신중함을 먼저 생각합니다.',
+      '평소에는 조용하지만 일단 결심하면 끝까지 밀어붙이는 강단이 있습니다. 원칙과 신의를 중시하며, 한번 맺은 신뢰는 절대 저버리지 않습니다.',
+      '안중근 의사처럼, 당신은 <b>깊은 사유 끝에 행동하며 그 행동에 반드시 책임을 지는 사람</b>입니다. 그 묵직함이 주변에 신뢰를 줍니다.',
+    ],
+    strengths:['철저한 준비와 분석력','원칙을 지키는 일관성','결정적 순간의 담대함','높은 책임감과 신의'],
+    weakness:['지나친 신중함으로 기회를 놓칠 수 있음','혼자 결정하는 경향이 소통을 줄일 수 있음'],
+    tip:'당신의 신중함과 원칙은 정말 귀한 자질입니다. 때로는 완벽하지 않은 상태에서도 먼저 움직이는 연습이 당신의 강점을 더욱 빛나게 합니다.',
+    pal:{ bg1:'#08100A', bg2:'#0E1C14', acc:'#3A9A60', frame:'#206040' },
+  },
+  {
+    id:'yun', name:'조용히 모든 것을 바치는 헌신형', fighter:'윤봉길 (尹奉吉)',
+    img: 'https://i.ifh.cc/5CK0M8.jpg', /* ← 이미지 경로 설정 예: 'images/yun.jpg' */
+    emblem:'🌅', mbti:'INFJ / ISFJ',
+    quote:'"장부가 집을 나서면 살아 돌아오지 않는다."',
+    word:'獻身', wordSub:'말보다 행동으로 증명하는 헌신',
+    desc:[
+      '당신은 <b>말보다 행동으로, 자신보다 공동체를 먼저 생각하는 헌신형 인간</b>입니다. 드러나지 않아도 묵묵히 자기 자리에서 최선을 다합니다.',
+      '주변 사람들의 고통에 깊이 공감하고, 그것을 해결하기 위해 스스로를 아끼지 않는 성향이 있습니다. 관계에서 신뢰가 두텁고, 한번 믿은 사람에겐 끝까지 함께합니다.',
+      '윤봉길 의사처럼, 당신은 <b>평범한 일상 속에서도 가장 중요한 것이 무엇인지 알고, 그것을 위해 기꺼이 나서는 사람</b>입니다.',
+    ],
+    strengths:['깊은 공감력과 따뜻함','말없이 증명하는 행동력','공동체를 위한 희생 정신','신뢰를 쌓는 일관된 태도'],
+    weakness:['자신의 감정과 필요를 뒤로 미루는 경향','거절하지 못해 소진될 수 있음'],
+    tip:'당신의 헌신은 주변 사람들에게 큰 힘이 됩니다. 당신 자신도 돌볼 자격이 있습니다. 스스로를 아끼는 것이 더 오래, 더 많이 기여하는 길입니다.',
+    pal:{ bg1:'#100A08', bg2:'#1C1010', acc:'#C9804C', frame:'#8B5020' },
+  },
+];
+
+/* ═══════════ STATE ═══════════ */
+let answers=[], curQ=0, introDone=false, introRafId=null;
+
+/* ═══════════ SCREEN ═══════════ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function eio(x){ return x<0.5?2*x*x:1-Math.pow(-2*x+2,2)/2; }
+
+/* ═══════════ EYE MASK ═══════════ */
+function drawEyeMask(ectx,W,H,openFrac){
+  ectx.clearRect(0,0,W,H);
+  if(openFrac>=0.999) return;
+  const cx=W/2, cy=H/2;
+  const eyeA=W*0.52, eyeB=H*0.56*openFrac;
+  ectx.fillStyle='#000'; ectx.fillRect(0,0,W,H);
+  if(openFrac>0.005){
+    ectx.save(); ectx.globalCompositeOperation='destination-out';
+    ectx.beginPath(); ectx.ellipse(cx,cy,eyeA,eyeB,0,0,Math.PI*2); ectx.fill(); ectx.restore();
+    ectx.save(); ectx.globalCompositeOperation='source-over';
+    ectx.strokeStyle='rgba(0,0,0,0.85)'; ectx.lineWidth=Math.max(6,H*0.018);
+    ectx.beginPath(); ectx.ellipse(cx,cy,eyeA,eyeB,0,0,Math.PI*2); ectx.stroke();
+    ectx.strokeStyle='rgba(0,0,0,0.35)'; ectx.lineWidth=Math.max(14,H*0.04);
+    ectx.beginPath(); ectx.ellipse(cx,cy,eyeA+4,eyeB+2,0,0,Math.PI*2); ectx.stroke();
+    ectx.restore();
+  }
+}
+
+/* ═══════════ INTRO (이미지 + 눈 마스크) ═══════════ */
+function initScene(){
+  const eyeCvs=document.getElementById('eyeOverlay');
+  const eyeCtx=eyeCvs.getContext('2d');
+  const cap=document.getElementById('introCaption');
+
+  function resize(){
+    eyeCvs.width=window.innerWidth;
+    eyeCvs.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  function getLidFrac(t){
+    if(t<0.7)  return 1-eio(t/0.7);
+    if(t<1.1)  return 0;
+    if(t<1.5)  return eio((t-1.1)/0.4);
+    if(t<2.1)  return 1-eio((t-1.5)/0.6);
+    if(t<2.6)  return 0;
+    if(t<3.0)  return eio((t-2.6)/0.4);
+    if(t<4.5)  return 1-eio((t-3.0)/1.5);
+    return 0;
+  }
+
+  let t=0, captionShown=false;
+  function frame(){
+    if(introDone) return;
+    const W=eyeCvs.width, H=eyeCvs.height;
+    t+=1/60;
+    const lidFrac=getLidFrac(t);
+    const openFrac=1-lidFrac;
+    drawEyeMask(eyeCtx,W,H,openFrac);
+    if(t>4.6&&!captionShown){ captionShown=true; cap.classList.add('show'); }
+    if(t>7.5){ goToStory(); return; }
+    introRafId=requestAnimationFrame(frame);
+  }
+  introRafId=requestAnimationFrame(frame);
+}
+
+function goToStory(){
+  if(introDone) return;
+  introDone=true;
+  if(introRafId) cancelAnimationFrame(introRafId);
+  buildLines('storyWrap',STORY);
+  showScreen('s-story');
+  setTimeout(()=>animLines('storyWrap'),150);
+}
+
+/* ═══════════ STORY BUILDER ═══════════ */
+function buildLines(wid,lines){
+  const w=document.getElementById(wid); w.innerHTML='';
+  lines.forEach((ln,i)=>{
+    if(ln.t==='gap')  { const d=document.createElement('div'); d.className='s-line s-gap';  d.dataset.i=i; w.appendChild(d); return; }
+    if(ln.t==='gapl') { const d=document.createElement('div'); d.className='s-line s-gapl'; d.dataset.i=i; w.appendChild(d); return; }
+    if(ln.t==='div')  { const d=document.createElement('div'); d.className='s-divider';     d.dataset.i=i; w.appendChild(d); return; }
+    if(ln.t==='cta')  {
+      const wrap=document.createElement('div'); wrap.className='cta-wrap'; wrap.dataset.i=i;
+      const btn=document.createElement('button'); btn.className='cta-btn'; btn.textContent=ln.tx;
+      btn.onclick=window[ln.fn]; wrap.appendChild(btn); w.appendChild(wrap); return;
+    }
+    const p=document.createElement('p');
+    p.className='s-line '+ln.t; p.textContent=ln.tx; p.dataset.i=i; w.appendChild(p);
+  });
+}
+
+function animLines(wid){
+  const kids=document.getElementById(wid).children;
+  let delay=0;
+  Array.from(kids).forEach(el=>{ setTimeout(()=>el.classList.add('vis'),delay); delay+=195; });
+}
+
+/* ═══════════ QUIZ ═══════════ */
+function renderQ(idx){
+  const q=QS[idx];
+  document.getElementById('progFill').style.width=`${(idx/QS.length)*100}%`;
+  const slide=document.getElementById('qSlide');
+  slide.classList.remove('in'); slide.classList.add('out');
+  setTimeout(()=>{
+    slide.innerHTML=`
+    <div class="q-top-bar"><span class="q-badge">Q${idx+1}</span><span class="q-of">/ ${QS.length}</span></div>
+    <div class="q-art">
+      ${q.img
+        ? `<div class="q-art-img" style="background-image:url('${q.img}')"></div>`
+        : `<canvas id="qc"></canvas>`}
+    </div>
+    <div class="q-body">
+      <div class="q-sit">📌 ${q.sit}</div>
+      <div class="q-main">${q.q.replace(/\n/g,'<br>')}</div>
+      <div class="q-sub-text">${q.sub}</div>
+    </div>
+    <div class="q-opts">
+      <button class="opt"><span class="opt-lbl">A</span><span class="opt-txt">${q.a[0].replace(/\n/g,'<br>')}</span></button>
+      <button class="opt"><span class="opt-lbl">B</span><span class="opt-txt">${q.a[1].replace(/\n/g,'<br>')}</span></button>
+    </div>`;
+    slide.classList.remove('out'); slide.classList.add('in');
+    if(!q.img) drawQArt(q);
+    slide.querySelectorAll('.opt').forEach((b,oi)=>b.addEventListener('click',()=>pick(oi)));
+  },320);
+}
+
+function drawQArt(q){
+  const c=document.getElementById('qc'); if(!c) return;
+  c.width=c.offsetWidth||600; c.height=c.offsetHeight||(c.width*(2/3));
+  const ctx=c.getContext('2d'), W=c.width, H=c.height;
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,q.c1); g.addColorStop(1,q.c2);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // 스크래치 라인 (오래된 사진 느낌)
+  ctx.strokeStyle='rgba(196,169,106,0.04)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=40){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x+5,H); ctx.stroke(); }
+  for(let y=0;y<H;y+=35){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y+3); ctx.stroke(); }
+
+  // 큰 이모지
+  ctx.font=`${H*0.52}px serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.globalAlpha=0.12; ctx.fillStyle='#E8DFC0'; ctx.fillText(q.icon,W*0.76,H*0.52); ctx.globalAlpha=1;
+
+  // 배경 한자/한글 텍스트
+  const chars='독립万歲大韓義거自由抗日';
+  ctx.font='bold 14px Noto Serif KR,serif'; ctx.textAlign='left';
+  ctx.fillStyle='rgba(196,169,106,0.09)';
+  for(let r=0;r<5;r++) for(let c2=0;c2<10;c2++) ctx.fillText(chars[(r*10+c2)%chars.length],c2*(W/10)+6,r*(H/5)+20);
+
+  // 인장 원형 (오른쪽 하단)
+  ctx.save();
+  ctx.globalAlpha=0.07;
+  ctx.strokeStyle='rgba(139,26,26,0.8)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.arc(W*0.85,H*0.78,H*0.14,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W*0.85,H*0.78,H*0.12,0,Math.PI*2); ctx.stroke();
+  ctx.font=`bold ${H*0.08}px Noto Serif KR,serif`; ctx.fillStyle='rgba(139,26,26,1)';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('독립',W*0.85,H*0.76); ctx.fillText('만세',W*0.85,H*0.8);
+  ctx.restore();
+
+  // 프레임
+  const fi=10;
+  ctx.strokeStyle='rgba(139,26,26,0.4)'; ctx.lineWidth=1; ctx.strokeRect(fi,fi,W-fi*2,H-fi*2);
+  [[fi,fi],[W-fi,fi],[fi,H-fi],[W-fi,H-fi]].forEach(([x,y])=>{
+    ctx.fillStyle='rgba(139,26,26,0.75)'; ctx.fillRect(x-4,y-4,8,8);
+  });
+  // 코너 장식 라인
+  const cl=22;
+  [[fi,fi,1,0],[fi,fi,0,1],[W-fi,fi,-1,0],[W-fi,fi,0,1],[fi,H-fi,1,0],[fi,H-fi,0,-1],[W-fi,H-fi,-1,0],[W-fi,H-fi,0,-1]].forEach(([x,y,dx,dy])=>{
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+dx*cl,y+dy*cl); ctx.strokeStyle='rgba(139,26,26,0.3)'; ctx.lineWidth=1.5; ctx.stroke();
+  });
+
+  // 글로우
+  const gl=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,H*0.7);
+  gl.addColorStop(0,'rgba(139,26,26,0.1)'); gl.addColorStop(1,'transparent');
+  ctx.fillStyle=gl; ctx.fillRect(0,0,W,H);
+
+  // 하단 페이드 (한지 색)
+  const fade2=ctx.createLinearGradient(0,H*0.5,0,H);
+  fade2.addColorStop(0,'transparent'); fade2.addColorStop(1,'rgba(226,204,160,0.5)');
+  ctx.fillStyle=fade2; ctx.fillRect(0,0,W,H);
+}
+
+function pick(oi){
+  document.querySelectorAll('.opt').forEach((b,i)=>b.classList.toggle('sel',i===oi));
+  answers.push(oi); curQ++;
+  setTimeout(()=>{ curQ<QS.length ? renderQ(curQ) : goToOutroText(); },460);
+}
+
+/* ═══════════ OUTRO TEXT (직접 이동) ═══════════ */
+function goToOutroText(){
+  buildLines('outroWrap',OUTRO);
+  showScreen('s-outro-text');
+  setTimeout(()=>animLines('outroWrap'),150);
+}
+
+/* ═══════════ OUTRO VID (미사용) ═══════════ */
+function startOutroVid(){
+  showScreen('s-outro');
+  const canvas=document.getElementById('blurCanvas');
+  const ctx=canvas.getContext('2d');
+  const outroCvs=document.getElementById('outroOverlay');
+  const outroECtx=outroCvs.getContext('2d');
+  const cap=document.getElementById('outroCaption');
+  function resize(){ canvas.width=outroCvs.width=window.innerWidth; canvas.height=outroCvs.height=window.innerHeight; }
+  resize();
+  let ot=0, capShown=false;
+  function oframe(){
+    const W=canvas.width, H=canvas.height;
+    ot+=1/60; ctx.clearRect(0,0,W,H);
+    const fade=Math.min(1,ot/2.5);
+    ctx.fillStyle=`rgba(6,4,2,${0.15+fade*0.78})`; ctx.fillRect(0,0,W,H);
+    // 흩어지는 태극기 입자
+    for(let i=0;i<28;i++){
+      const ang=(i/28)*Math.PI*2+ot*0.08;
+      const r=(80+Math.sin(ot*0.5+i)*40)*fade;
+      const px=W/2+Math.cos(ang)*r, py=H/2+Math.sin(ang)*r*0.5;
+      const a=(0.2+Math.sin(ot+i)*0.15)*fade;
+      const col=i%3===0?`rgba(139,26,26,${a})`:i%3===1?`rgba(26,58,107,${a})`:`rgba(196,169,106,${a})`;
+      ctx.beginPath(); ctx.arc(px,py,1.8,0,Math.PI*2); ctx.fillStyle=col; ctx.fill();
+    }
+    if(ot>1.0&&!capShown){ capShown=true; cap.classList.add('show'); }
+    if(ot>2.2){
+      const cp=Math.min(1,(ot-2.2)/1.1);
+      const openFrac=1-eio(cp);
+      drawEyeMask(outroECtx,W,H,openFrac);
+    } else { outroECtx.clearRect(0,0,outroCvs.width,outroCvs.height); }
+    if(ot<3.8) requestAnimationFrame(oframe);
+    else{
+      buildLines('outroWrap',OUTRO);
+      showScreen('s-outro-text');
+      setTimeout(()=>animLines('outroWrap'),150);
+    }
+  }
+  requestAnimationFrame(oframe);
+}
+
+/* ═══════════ RESULT ═══════════ */
+function calcResult(){
+  const aCount=answers.filter(a=>a===0).length;
+  const bCount=answers.filter(a=>a===1).length;
+  const strategic=[answers[0],answers[3],answers[6]].filter(a=>a===0).length;
+  const action=[answers[1],answers[4],answers[7]].filter(a=>a===1).length;
+  if(aCount>=5&&strategic>=2) return RESULTS[0]; // 김구
+  if(bCount>=5&&action>=2)    return RESULTS[1]; // 유관순
+  if(aCount>=4&&strategic<2)  return RESULTS[2]; // 안중근
+  return RESULTS[3]; // 윤봉길
+}
+
+function renderResult(){
+  const r=calcResult();
+  const shell=document.getElementById('resultShell');
+  shell.innerHTML=`
+  <div class="r-hero">
+    <canvas id="rhc"${r.img ? ' style="display:none"' : ''}></canvas>
+    ${r.img ? `<div class="r-hero-img" style="background-image:url('${r.img}')"></div>` : ''}
+    <div class="r-hero-fade"></div>
+    <div class="r-emblem">${r.emblem}</div>
+  </div>
+  <div class="r-body">
+    <div class="r-overtag">🔥 내가 독립운동가의 후손이라면?</div>
+    <div><div class="r-name">${r.name}</div><div class="r-fighter">${r.fighter}</div></div>
+    <div class="r-word"><div class="r-word-kor">${r.word}</div><div class="r-word-sub">${r.wordSub}</div></div>
+    <div class="r-line"></div>
+    <div class="r-quote">${r.quote}</div>
+    ${r.desc.map(d=>`<p class="r-desc">${d}</p>`).join('')}
+    <div class="r-line"></div>
+    <div class="sw-grid">
+      <div class="sw-card str"><div class="sw-label">강점 STRENGTH</div>${r.strengths.map(s=>`<div class="sw-item">${s}</div>`).join('')}</div>
+      <div class="sw-card wkn"><div class="sw-label">주의 WEAKNESS</div>${r.weakness.map(w=>`<div class="sw-item">${w}</div>`).join('')}</div>
+    </div>
+    <div class="r-mbti"><span class="r-mbti-l">MBTI</span><span class="r-mbti-v">${r.mbti}</span></div>
+    <div class="r-tip"><div class="r-tip-label">💡 당신에게 드리는 한 마디</div><div class="r-tip-text">${r.tip}</div></div>
+    <button class="retry-btn" id="retryBtn">↩ 다시 해보기</button>
+  </div>`;
+  setTimeout(()=>{
+    const rhc=document.getElementById('rhc');
+    if(!rhc || r.img) return;
+    rhc.width=rhc.offsetWidth||640; rhc.height=rhc.offsetHeight||420;
+    drawRHero(rhc.getContext('2d'),rhc.width,rhc.height,r);
+  },60);
+  document.getElementById('retryBtn').onclick=retryQuiz;
+}
+
+function drawRHero(ctx,W,H,r){
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,r.pal.bg1); g.addColorStop(0.6,r.pal.bg2); g.addColorStop(1,r.pal.bg1);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // 수직 줄 (오래된 사진 느낌)
+  ctx.strokeStyle=`${r.pal.acc}10`; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=48){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x+3,H); ctx.stroke(); }
+  for(let y=0;y<H;y+=42){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y+2); ctx.stroke(); }
+
+  // 큰 한자 배경
+  ctx.font=`bold ${H*0.78}px Noto Serif KR,serif`;
+  ctx.textAlign='right'; ctx.textBaseline='middle';
+  ctx.fillStyle=r.pal.acc; ctx.globalAlpha=0.09;
+  ctx.fillText(r.word[0],W+8,H*0.56); ctx.globalAlpha=1;
+
+  // 두 번째 한자 (왼쪽 위)
+  if(r.word[1]){
+    ctx.font=`bold ${H*0.38}px Noto Serif KR,serif`;
+    ctx.textAlign='left'; ctx.globalAlpha=0.05;
+    ctx.fillStyle=r.pal.acc;
+    ctx.fillText(r.word[1],-8,H*0.38); ctx.globalAlpha=1;
+  }
+
+  // 인장 원형
+  ctx.save(); ctx.globalAlpha=0.12;
+  ctx.strokeStyle=r.pal.acc; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.arc(W*0.5,H*0.5,H*0.38,0,Math.PI*2); ctx.stroke();
+  ctx.restore();
+
+  // 프레임
+  ctx.strokeStyle=`${r.pal.frame}80`; ctx.lineWidth=2; ctx.strokeRect(12,12,W-24,H-24);
+  ctx.strokeStyle=`${r.pal.frame}40`; ctx.lineWidth=1; ctx.strokeRect(18,18,W-36,H-36);
+  [[12,12],[W-12,12],[12,H-12],[W-12,H-12]].forEach(([x,y])=>{
+    ctx.fillStyle=r.pal.acc; ctx.fillRect(x-5,y-5,10,10);
+  });
+  // 코너 라인 장식
+  const cl=30;
+  [[12,12,1,0],[12,12,0,1],[W-12,12,-1,0],[W-12,12,0,1],[12,H-12,1,0],[12,H-12,0,-1],[W-12,H-12,-1,0],[W-12,H-12,0,-1]].forEach(([x,y,dx,dy])=>{
+    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+dx*cl,y+dy*cl); ctx.strokeStyle=`${r.pal.acc}60`; ctx.lineWidth=1.5; ctx.stroke();
+  });
+
+  // 글로우
+  const gl=ctx.createRadialGradient(W*0.5,H*0.4,0,W*0.5,H*0.4,W*0.55);
+  gl.addColorStop(0,`${r.pal.acc}28`); gl.addColorStop(1,'transparent');
+  ctx.fillStyle=gl; ctx.fillRect(0,0,W,H);
+
+  // 하단 페이드
+  const fade=ctx.createLinearGradient(0,H*0.45,0,H);
+  fade.addColorStop(0,'transparent'); fade.addColorStop(1,'rgba(226,204,160,0.55)');
+  ctx.fillStyle=fade; ctx.fillRect(0,0,W,H);
+}
+
+/* ═══════════ FLOW ═══════════ */
+function skipIntro(){ goToStory(); }
+function startQuiz(){
+  showScreen('s-quiz'); curQ=0; answers=[];
+  const sl=document.getElementById('qSlide'); sl.className='q-slide in'; sl.innerHTML='';
+  renderQ(0);
+}
+function showResult(){ renderResult(); showScreen('s-result'); }
+function retryQuiz(){
+  answers=[]; curQ=0;
+  buildLines('storyWrap',STORY); showScreen('s-story');
+  setTimeout(()=>animLines('storyWrap'),150);
+}
+
+/* ═══════════ CARD DOTS ═══════════ */
+function initCardDots(){
+  const track=document.getElementById('cardTrack');
+  const dots=document.querySelectorAll('#cardDots .card-dot');
+  if(!track||!dots.length) return;
+  // 이미지가 설정된 카드에 has-img 클래스 추가 (placeholder 숨김)
+  document.querySelectorAll('.card-img').forEach(el=>{
+    const bg=el.style.backgroundImage;
+    if(bg && bg !== "url('')" && bg !== 'url("")' && bg !== 'none' && bg !== '') {
+      el.classList.add('has-img');
+    }
+  });
+  track.addEventListener('scroll',()=>{
+    const idx=Math.round(track.scrollLeft/(track.scrollWidth/dots.length));
+    dots.forEach((d,i)=>d.classList.toggle('on',i===Math.min(idx,dots.length-1)));
+  },{passive:true});
+}
+
+/* ═══════════ CARD IMAGE SETUP ═══════════ */
+/* 이미지 경로 설정: url('path') 형식으로 변경 */
+const CARD_IMAGES = [
+  '', /* ← card1 이미지 경로 예: 'images/card1.jpg' */
+  '', /* ← card2 */
+  '', /* ← card3 */
+  '', /* ← card4 */
+  '', /* ← card5 */
+];
+function applyCardImages(){
+  CARD_IMAGES.forEach((src,i)=>{
+    const el=document.getElementById(`cimg${i+1}`);
+    const ph=document.getElementById(`cph${i+1}`);
+    if(!el) return;
+    if(src){ el.style.backgroundImage=`url('${src}')`; if(ph) ph.style.display='none'; }
+  });
+}
+
+/* ═══════════ LANDING ═══════════ */
+function showLanding(){
+  showScreen('s-landing');
+  document.getElementById('s-landing').scrollTop=0;
+  setTimeout(()=>{ initCardDots(); applyCardImages(); },300);
+}
+
+/* ═══════════ DB FORM ═══════════ */
+let nfSel={ region:'', job:'' };
+function nfRadio(group, val, el){
+  nfSel[group]=val;
+  document.querySelectorAll(`#nf-${group}-group .nf-rbtn`).forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function handleDbSubmit(){
+  const name=document.getElementById('nf-name').value.trim();
+  const age=document.getElementById('nf-age').value.trim();
+  const phone=document.getElementById('nf-phone').value.trim();
+  const city=document.getElementById('nf-city').value.trim();
+  const agree=document.getElementById('nf-agree').checked;
+  if(!name){ alert('성함을 입력해주세요.'); return; }
+  if(!age){ alert('나이를 입력해주세요.'); return; }
+  if(!phone){ alert('연락처를 입력해주세요.'); return; }
+  if(!nfSel.region){ alert('거주 지역을 선택해주세요.'); return; }
+  if(!city){ alert('시/군/구를 입력해주세요.'); return; }
+  if(!nfSel.job){ alert('직업 상태를 선택해주세요.'); return; }
+  if(!agree){ alert('개인정보 수집·이용에 동의해주세요.'); return; }
+
+  /* ── 구글 시트 전송 ── */
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsppWJRRTFAkkLFXcUQbluYQRxIrNZsg5AhbqjnHwbMGa269ms9zogI5KNl8wAN9Qh9g/exec'; /* ← 2단계에서 복사한 URL로 교체 */
+
+  const btn = document.getElementById('nfSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = '제출 중…';
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    body: JSON.stringify({ name, age, phone, region: nfSel.region, city, job: nfSel.job }),
+  })
+  .catch(() => {}) // 전송 실패해도 결과는 보여줌
+  .finally(() => { showResult(); });
+}
+
+window.skipIntro=skipIntro;
+window.startQuiz=startQuiz;
+window.showResult=showResult;
+window.showLanding=showLanding;
+window.retryQuiz=retryQuiz;
+window.handleDbSubmit=handleDbSubmit;
+window.nfRadio=nfRadio;
+
+document.getElementById('skipBtn').onclick=skipIntro;
+window.addEventListener('load',()=>{
+  /* URL 해시로 랜딩 직접 접근: 파일명.html#landing */
+  if(window.location.hash==='#landing'){
+    introDone=true;
+    showLanding();
+  } else {
+    initScene();
+  }
+});
+</script>
+</body>
+</html>
