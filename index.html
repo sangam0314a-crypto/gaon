@@ -84,36 +84,32 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 .cta-btn:hover::after { transform:translateX(100%); }
 .cta-btn:hover { transform:scale(1.04); box-shadow:0 0 36px rgba(139,26,26,0.5); }
 
-/* ── QUIZ ── */
-#s-quiz { background:var(--bg2); z-index:18; justify-content:flex-start; overflow-y:auto;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(42,32,22,0.032) 30px, rgba(42,32,22,0.032) 31px),
-    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(42,32,22,0.018) 30px, rgba(42,32,22,0.018) 31px); }
-.quiz-shell { width:100%; max-width:640px; min-height:100vh; display:flex; flex-direction:column; }
-.prog-track { position:sticky; top:0; z-index:5; width:100%; height:5px; background:rgba(58,48,32,0.12); }
-.prog-fill { height:100%; background:linear-gradient(90deg,#5A0A0A,var(--red),#C84040); transition:width 0.55s ease; width:0%; }
-.q-slide { opacity:0; transform:translateX(28px); transition:opacity 0.38s ease, transform 0.38s ease; display:flex; flex-direction:column; flex:1; }
+/* ── QUIZ (깔끔한 설문 UI) ── */
+#s-quiz { background:var(--bg2); z-index:18; justify-content:flex-start; overflow-y:auto; }
+.quiz-shell { width:100%; max-width:600px; min-height:100vh; display:flex; flex-direction:column; }
+.prog-track { position:sticky; top:0; z-index:5; width:100%; height:3px; background:rgba(42,32,22,0.10); }
+.prog-fill { height:100%; background:var(--red); border-radius:0 2px 2px 0; transition:width 0.5s ease; width:0%; }
+.q-slide { opacity:0; transform:translateX(24px); transition:opacity 0.38s ease, transform 0.38s ease; display:flex; flex-direction:column; flex:1; }
 .q-slide.in  { opacity:1; transform:none; }
-.q-slide.out { opacity:0; transform:translateX(-28px); }
-.q-top-bar { display:flex; align-items:center; gap:10px; padding:18px 22px 0; }
-.q-badge { font-family:'Noto Serif KR',serif; font-size:11px; letter-spacing:0.22em; color:var(--red); border:1px solid rgba(139,26,26,0.5); padding:4px 10px; background:rgba(255,245,225,0.7); }
-.q-of { font-size:11px; color:rgba(58,48,32,0.45); letter-spacing:0.1em; }
-.q-art { width:100%; aspect-ratio:3/2; position:relative; overflow:hidden; background:var(--ink); flex-shrink:0; }
+.q-slide.out { opacity:0; transform:translateX(-24px); }
+.q-top-bar { display:flex; align-items:center; gap:10px; padding:24px 24px 0; }
+.q-badge { font-family:'Noto Sans KR',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.14em; color:var(--red); background:rgba(165,39,31,0.08); padding:5px 12px; border-radius:20px; }
+.q-of { font-size:11px; color:rgba(42,32,22,0.4); letter-spacing:0.06em; font-weight:500; }
+.q-art { position:relative; aspect-ratio:3/2; overflow:hidden; background:var(--bg); flex-shrink:0; border-radius:18px; width:calc(100% - 48px); margin:18px auto 0; box-shadow:0 8px 28px rgba(42,32,22,0.14); }
 .q-art canvas { width:100%; height:100%; display:block; }
-.q-art-img { position:absolute; inset:0; background-size:cover; background-position:center top; filter:sepia(0.3) contrast(1.05) brightness(0.95); }
-.q-body { padding:20px 22px 14px; }
-.q-sit { font-size:11px; letter-spacing:0.2em; color:var(--red); font-weight:600; margin-bottom:10px; }
-.q-main { font-family:'Noto Serif KR',serif; font-size:clamp(17px,4.8vw,23px); font-weight:800; color:var(--ink); line-height:1.6; margin-bottom:6px; }
-.q-sub-text { font-size:clamp(12px,3vw,14px); color:rgba(58,48,32,0.65); line-height:1.7; margin-bottom:20px; }
-.q-opts { display:flex; flex-direction:column; gap:11px; padding:0 22px 44px; }
-.opt { background:#FFFFFF; border:1.5px solid rgba(165,39,31,0.22); padding:17px 18px; display:flex; align-items:flex-start; gap:13px; cursor:pointer; text-align:left; position:relative; overflow:hidden; transition:border-color 0.22s,background 0.22s,transform 0.22s; box-shadow:inset 0 0 0 0 transparent, 0 1px 4px rgba(42,32,22,0.08); }
-.opt::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--red); transform:scaleY(0); transform-origin:bottom; transition:transform 0.22s; }
-.opt:hover { border-color:var(--red); background:#FFF9EF; transform:translateX(3px); box-shadow:0 2px 10px rgba(165,39,31,0.12); }
-.opt:hover::before { transform:scaleY(1); }
-.opt.sel { border-color:var(--red); background:rgba(139,26,26,0.12); box-shadow:0 2px 8px rgba(139,26,26,0.18); }
-.opt.sel::before { transform:scaleY(1); }
-.opt-lbl { font-family:'Noto Serif KR',serif; font-size:clamp(13px,3.2vw,15px); font-weight:800; color:var(--red); flex-shrink:0; margin-top:1px; width:22px; height:22px; border:1.5px solid rgba(139,26,26,0.5); display:flex; align-items:center; justify-content:center; border-radius:50%; }
-.opt-txt { font-size:clamp(13px,3.2vw,15px); color:#1A1208; line-height:1.65; font-family:'Noto Serif KR',serif; font-weight:600; }
+.q-art-img { position:absolute; inset:0; background-size:cover; background-position:center top; filter:sepia(0.2) contrast(1.03) brightness(0.98); }
+.q-body { padding:24px 24px 10px; }
+.q-sit { font-size:11px; letter-spacing:0.1em; color:var(--red); font-weight:700; margin-bottom:12px; }
+.q-main { font-family:'Noto Serif KR',serif; font-size:clamp(18px,4.9vw,24px); font-weight:800; color:var(--ink); line-height:1.55; letter-spacing:-0.01em; margin-bottom:8px; }
+.q-sub-text { font-size:clamp(12px,3vw,14px); color:rgba(42,32,22,0.55); line-height:1.7; margin-bottom:24px; }
+.q-opts { display:flex; flex-direction:column; gap:12px; padding:0 24px 48px; }
+.opt { background:#fff; border:1.5px solid rgba(42,32,22,0.12); border-radius:16px; padding:18px 20px; display:flex; align-items:center; gap:15px; cursor:pointer; text-align:left; transition:border-color 0.2s,background 0.2s,box-shadow 0.2s,transform 0.2s; box-shadow:0 1px 3px rgba(42,32,22,0.05); }
+.opt:hover { border-color:var(--red); box-shadow:0 8px 22px rgba(165,39,31,0.13); transform:translateY(-2px); }
+.opt.sel { border-color:var(--red); background:rgba(165,39,31,0.045); box-shadow:0 8px 22px rgba(165,39,31,0.15); }
+.opt-lbl { flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid rgba(42,32,22,0.22); color:rgba(42,32,22,0.5); font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; transition:background 0.2s,border-color 0.2s,color 0.2s; }
+.opt:hover .opt-lbl { border-color:var(--red); color:var(--red); }
+.opt.sel .opt-lbl { background:var(--red); border-color:var(--red); color:#fff; }
+.opt-txt { font-size:clamp(14px,3.4vw,15.5px); color:var(--ink); line-height:1.6; font-family:'Noto Sans KR',sans-serif; font-weight:500; }
 
 /* ── OUTRO VID ── */
 #s-outro { background:#000; z-index:17; }
@@ -206,41 +202,43 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 .petition-final-title { font-family:'Noto Serif KR',serif; font-size:clamp(18px,5vw,24px); font-weight:700; color:var(--ink); line-height:1.5; margin-bottom:8px; }
 .petition-final-sub { font-size:13px; color:rgba(42,32,22,0.5); margin-bottom:32px; line-height:1.7; }
 
-/* ── DB FORM (새 디자인) ── */
-#s-dbform { background:var(--bg); z-index:13; overflow-y:auto; justify-content:flex-start;
-  background-image: repeating-linear-gradient(0deg, transparent, transparent 44px, rgba(42,32,22,0.02) 44px, rgba(42,32,22,0.02) 45px); }
-.nf-wrap { width:100%; max-width:560px; margin:0 auto; }
+/* ── DB FORM (설문과 동일한 톤) ── */
+#s-dbform { background:var(--bg2); z-index:13; overflow-y:auto; justify-content:flex-start; }
+.nf-wrap { width:100%; max-width:600px; margin:0 auto; }
 .nf-inner { min-height:100svh; display:flex; flex-direction:column; padding:52px 0 80px; }
-.nf-logo { font-family:'Noto Serif KR',serif; font-size:12px; font-weight:700; letter-spacing:0.35em; color:var(--red); border:1px solid rgba(165,39,31,0.32); padding:6px 16px; border-radius:2px; align-self:flex-start; margin:0 24px 32px; }
-.nf-title { font-family:'Noto Serif KR',serif; font-size:clamp(18px,5vw,24px); font-weight:700; color:var(--ink); line-height:1.45; margin:0 24px 6px; }
-.nf-sub { font-size:13px; color:rgba(42,32,22,0.5); line-height:1.7; margin:0 24px 24px; }
-.nf-field { border-bottom:1px solid var(--line); }
-.nf-flabel { display:block; font-family:'Noto Sans KR',sans-serif; font-size:clamp(14px,3.5vw,16px); font-weight:700; color:var(--ink); padding:22px 24px 6px; letter-spacing:0.03em; }
-.nf-flabel .req { color:#B5271C; margin-left:3px; }
-.nf-finput { width:100%; padding:8px 24px 20px; background:transparent; border:none; color:var(--ink); font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; }
-.nf-finput::placeholder { color:rgba(42,32,22,0.3); }
-.nf-tel-row { display:flex; align-items:center; padding:8px 24px 20px; gap:10px; }
-.nf-tel-row svg { flex-shrink:0; opacity:0.55; }
+.nf-logo { font-family:'Noto Sans KR',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.14em; color:var(--red); background:rgba(165,39,31,0.08); padding:6px 14px; border-radius:20px; align-self:flex-start; margin:0 24px 26px; }
+.nf-title { font-family:'Noto Serif KR',serif; font-size:clamp(19px,5vw,25px); font-weight:800; color:var(--ink); line-height:1.4; letter-spacing:-0.01em; margin:0 24px 8px; }
+.nf-sub { font-size:13px; color:rgba(42,32,22,0.5); line-height:1.7; margin:0 24px 30px; }
+.nf-field { padding:0 24px; margin-bottom:22px; }
+.nf-flabel { display:block; font-family:'Noto Sans KR',sans-serif; font-size:clamp(14px,3.5vw,15.5px); font-weight:700; color:var(--ink); padding:0 2px 10px; letter-spacing:0.01em; }
+.nf-flabel .req { color:var(--red); margin-left:3px; }
+.nf-finput { width:100%; padding:15px 16px; background:#fff; border:1.5px solid rgba(42,32,22,0.12); border-radius:14px; color:var(--ink); font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; transition:border-color 0.18s,box-shadow 0.18s; }
+.nf-finput:focus { border-color:var(--red); box-shadow:0 0 0 3px rgba(165,39,31,0.10); }
+.nf-finput::placeholder { color:rgba(42,32,22,0.28); }
+.nf-tel-row { display:flex; align-items:center; gap:10px; padding:14px 16px; background:#fff; border:1.5px solid rgba(42,32,22,0.12); border-radius:14px; transition:border-color 0.18s,box-shadow 0.18s; }
+.nf-tel-row:focus-within { border-color:var(--red); box-shadow:0 0 0 3px rgba(165,39,31,0.10); }
+.nf-tel-row svg { flex-shrink:0; opacity:0.5; }
 .nf-tel-row input { flex:1; background:transparent; border:none; color:var(--ink); font-size:15px; font-family:'Noto Sans KR',sans-serif; outline:none; }
-.nf-tel-row input::placeholder { color:rgba(42,32,22,0.3); }
-.nf-radio-group { padding:10px 24px 22px; display:flex; flex-wrap:wrap; gap:10px; }
-.nf-rbtn { display:flex; align-items:center; gap:10px; padding:13px 18px; border:1.5px solid rgba(165,39,31,0.18); cursor:pointer; transition:border-color 0.18s,background 0.18s; background:#FFFFFF; flex-basis:calc(50% - 5px); }
+.nf-tel-row input::placeholder { color:rgba(42,32,22,0.28); }
+.nf-radio-group { padding:0; display:flex; flex-wrap:wrap; gap:10px; }
+.nf-rbtn { display:flex; align-items:center; gap:12px; padding:15px 16px; border:1.5px solid rgba(42,32,22,0.12); border-radius:14px; cursor:pointer; transition:border-color 0.18s,background 0.18s,box-shadow 0.18s,transform 0.18s; background:#fff; box-shadow:0 1px 3px rgba(42,32,22,0.04); flex-basis:calc(50% - 5px); }
+.nf-rbtn:hover { border-color:var(--red); transform:translateY(-1px); box-shadow:0 6px 16px rgba(165,39,31,0.10); }
 .nf-rbtn.full { flex-basis:100%; }
 .nf-rbtn input[type=radio] { display:none; }
-.nf-circle { width:18px; height:18px; border-radius:50%; border:2px solid rgba(42,32,22,0.28); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:border-color 0.15s; }
-.nf-circle::after { content:''; width:8px; height:8px; border-radius:50%; background:#B5271C; opacity:0; transition:opacity 0.12s; }
-.nf-rbtn.sel { border-color:rgba(165,39,31,0.5); background:rgba(165,39,31,0.07); }
-.nf-rbtn.sel .nf-circle { border-color:#B5271C; }
+.nf-circle { width:22px; height:22px; border-radius:50%; border:1.5px solid rgba(42,32,22,0.25); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:border-color 0.15s,background 0.15s; }
+.nf-circle::after { content:''; width:9px; height:9px; border-radius:50%; background:#fff; opacity:0; transition:opacity 0.12s; }
+.nf-rbtn.sel { border-color:var(--red); background:rgba(165,39,31,0.045); box-shadow:0 6px 16px rgba(165,39,31,0.12); }
+.nf-rbtn.sel .nf-circle { border-color:var(--red); background:var(--red); }
 .nf-rbtn.sel .nf-circle::after { opacity:1; }
-.nf-rtext { font-size:clamp(13px,3.2vw,15px); color:rgba(42,32,22,0.8); }
-.nf-consent { margin:20px 24px; border:1px solid var(--line); padding:18px; background:#FFFFFF; }
+.nf-rtext { font-size:clamp(13px,3.3vw,15px); color:var(--ink); font-weight:500; }
+.nf-consent { margin:6px 24px 0; border:1.5px solid rgba(42,32,22,0.12); border-radius:16px; padding:18px; background:#fff; }
 .nf-consent-head { font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px; display:flex; align-items:center; gap:7px; }
-.nf-consent-dot { width:8px; height:8px; border-radius:50%; background:#B5271C; flex-shrink:0; }
+.nf-consent-dot { width:7px; height:7px; border-radius:50%; background:var(--red); flex-shrink:0; }
 .nf-consent-body { font-size:11px; color:rgba(42,32,22,0.5); line-height:1.7; max-height:84px; overflow-y:auto; }
-.nf-consent-check { display:flex; align-items:center; gap:10px; margin-top:13px; cursor:pointer; }
-.nf-consent-check input { accent-color:#B5271C; width:16px; height:16px; }
+.nf-consent-check { display:flex; align-items:center; gap:10px; margin-top:14px; cursor:pointer; }
+.nf-consent-check input { accent-color:var(--red); width:16px; height:16px; }
 .nf-consent-check span { font-size:12px; color:rgba(42,32,22,0.65); }
-.nf-submit { margin:6px 24px 0; font-family:'Noto Serif KR',serif; font-size:clamp(14px,3.8vw,17px); font-weight:700; letter-spacing:0.12em; color:#fff; background:linear-gradient(135deg,#6B1010,#8B1A1A,#B83232); border:none; cursor:pointer; padding:19px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); position:relative; overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; width:calc(100% - 48px); }
+.nf-submit { margin:24px 24px 0; font-family:'Noto Serif KR',serif; font-size:clamp(14px,3.8vw,17px); font-weight:700; letter-spacing:0.12em; color:#fff; background:linear-gradient(135deg,#6B1010,#8B1A1A,#B83232); border:none; cursor:pointer; padding:19px; clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%); position:relative; overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; width:calc(100% - 48px); }
 .nf-submit::after { content:''; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.2),transparent 70%); transform:translateX(-100%); transition:transform 0.55s; }
 .nf-submit:hover::after { transform:translateX(100%); }
 .nf-submit:hover { transform:scale(1.02); box-shadow:0 0 36px rgba(139,26,26,0.4); }
@@ -290,7 +288,7 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 
     <!-- 상단 타이틀 (compact) -->
     <div class="petition-top">
-      <div class="petition-badge">S E E S A W</div>
+      <div class="petition-badge">G A O N</div>
       <div class="petition-pre">당신의 독립운동가 유형이 정해졌습니다</div>
       <h1 class="petition-title">
         역사를 기억하는 것이<br>
@@ -349,7 +347,7 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 <div class="screen scrollable" id="s-dbform">
   <div class="nf-wrap">
     <div class="nf-inner">
-      <div class="nf-logo">S E E S A W</div>
+      <div class="nf-logo">G A O N</div>
       <h2 class="nf-title">서명에 참여해주셔서<br><span style="color:var(--sepia-lt)">감사합니다.</span></h2>
       <p class="nf-sub">정보를 입력하시면 서명이 완료됩니다.</p>
 
@@ -422,7 +420,7 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 
       <div class="nf-consent">
         <div class="nf-consent-head"><div class="nf-consent-dot"></div>개인정보 수집 및 이용 동의</div>
-        <div class="nf-consent-body">다음 사항은 SEESAW(이하 'NGO단체')의 회원 및 서비스 이용자(이하 '이용자')의 개인정보 보호를 위해 정보수집의 목적과 이용 및 정책적 보안을 규정한 것으로, 수집 항목: 성함, 나이, 연락처, 거주 지역, 직업 상태 / 이용 목적: 서명운동 참여 확인 및 서비스 제공 / 보유 기간: 서비스 종료 시까지. 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 미동의 시 서명 참여가 제한됩니다.</div>
+        <div class="nf-consent-body">다음 사항은 gaon(이하 'NGO단체')의 회원 및 서비스 이용자(이하 '이용자')의 개인정보 보호를 위해 정보수집의 목적과 이용 및 정책적 보안을 규정한 것으로, 수집 항목: 성함, 나이, 연락처, 거주 지역, 직업 상태 / 이용 목적: 서명운동 참여 확인 및 서비스 제공 / 보유 기간: 서비스 종료 시까지. 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 미동의 시 서명 참여가 제한됩니다.</div>
         <label class="nf-consent-check">
           <input type="checkbox" id="nf-agree"/>
           <span>[필수] 위 개인정보 수집·이용에 동의합니다.</span>
@@ -460,20 +458,13 @@ const STORY = [
 ];
 
 const OUTRO = [
-  {t:'s-lg', tx:'기억이 서서히 흐려집니다.'},
-  {t:'gap'},
-  {t:'s-sm', tx:'태극기 소리가 멀어지고'},
-  {t:'s-sm', tx:'만세 함성도 점점 희미해집니다.'},
+  {t:'s-lg', tx:'기억이 흐려집니다.'},
   {t:'gap'},
   {t:'s-lg s-red', tx:'"우리는 반드시 독립한다."'},
   {t:'gapl'},
-  {t:'s-lg', tx:'그리고 다시 현실로 돌아옵니다.'},
+  {t:'s-sm', tx:'다시 현실로 돌아옵니다.'},
   {t:'gap'},
-  {t:'s-sm', tx:'하지만 방금 당신이 했던 선택들은'},
-  {t:'s-md', tx:'사라지지 않았습니다.'},
-  {t:'gap'},
-  {t:'s-sm', tx:'그 시대의 당신이 보여준 태도는'},
-  {t:'s-lg s-sepia', tx:'지금 당신이 세상을 대하는 방식입니다.'},
+  {t:'s-lg s-sepia', tx:'그때의 태도가, 지금의 당신입니다.'},
   {t:'cta', tx:'🔥 내 유형 결과 확인하기', fn:'showLanding'},
 ];
 
@@ -1032,7 +1023,7 @@ function handleDbSubmit(){
   if(!agree){ alert('개인정보 수집·이용에 동의해주세요.'); return; }
 
   /* ── 구글 시트 전송 ── */
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsppWJRRTFAkkLFXcUQbluYQRxIrNZsg5AhbqjnHwbMGa269ms9zogI5KNl8wAN9Qh9g/exec'; /* ← 2단계에서 복사한 URL로 교체 */
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw9kjQwbKSAM8LDoW9LQWIfQdABOpqlYNjIwH3_RakQWZxWTiro7GsasGRMNjOGq8EEVg/exec'; /* gaon 구글 시트 연동 */
 
   const btn = document.getElementById('nfSubmitBtn');
   btn.disabled = true;
