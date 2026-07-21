@@ -411,7 +411,11 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
             <input type="radio" name="nf-job" value="직장인"/>
             <div class="nf-circle"></div><span class="nf-rtext">직장인</span>
           </label>
-          <label class="nf-rbtn full" onclick="nfRadio('job','무직',this)">
+          <label class="nf-rbtn" onclick="nfRadio('job','직업군인',this)">
+            <input type="radio" name="nf-job" value="직업군인"/>
+            <div class="nf-circle"></div><span class="nf-rtext">직업군인</span>
+          </label>
+          <label class="nf-rbtn" onclick="nfRadio('job','무직',this)">
             <input type="radio" name="nf-job" value="무직"/>
             <div class="nf-circle"></div><span class="nf-rtext">무직</span>
           </label>
@@ -420,7 +424,7 @@ body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:
 
       <div class="nf-consent">
         <div class="nf-consent-head"><div class="nf-consent-dot"></div>개인정보 수집 및 이용 동의</div>
-        <div class="nf-consent-body">다음 사항은 gaon(이하 'NGO단체')의 회원 및 서비스 이용자(이하 '이용자')의 개인정보 보호를 위해 정보수집의 목적과 이용 및 정책적 보안을 규정한 것으로, 수집 항목: 성함, 나이, 연락처, 거주 지역, 직업 상태 / 이용 목적: 서명운동 참여 확인 및 서비스 제공 / 보유 기간: 서비스 종료 시까지. 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 미동의 시 서명 참여가 제한됩니다.</div>
+        <div class="nf-consent-body">다음 사항은 가온(이하 'NGO단체')의 회원 및 서비스 이용자(이하 '이용자')의 개인정보 보호를 위해 정보수집의 목적과 이용 및 정책적 보안을 규정한 것으로, 수집 항목: 성함, 나이, 연락처, 거주 지역, 직업 상태 / 이용 목적: 서명운동 참여 확인 및 서비스 제공 / 보유 기간: 서비스 종료 시까지. 이용자는 개인정보 수집·이용에 동의하지 않을 권리가 있으나, 미동의 시 서명 참여가 제한됩니다.</div>
         <label class="nf-consent-check">
           <input type="checkbox" id="nf-agree"/>
           <span>[필수] 위 개인정보 수집·이용에 동의합니다.</span>
